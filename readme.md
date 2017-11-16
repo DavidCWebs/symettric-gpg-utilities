@@ -2,7 +2,7 @@ Symmetric File Encryption with GnuPG
 ====================================
 This utility is a wrapper for GnuPG that focuses on backing up files to be stored in paper format.
 
-Use cases might be sensitive config data that needs to be backed up both securely and with a high degree of reliability.
+Use case: sensitive config data that needs to be backed up both securely and with a high degree of reliability.
 
 This package adds a bit of convenience when encrypting & decrypting files from the command line.
 
