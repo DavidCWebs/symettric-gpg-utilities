@@ -6,32 +6,6 @@
 set -o nounset
 set -o errexit
 
-function set_target {
-	TARGET=$(zenity --file-selection --title="Select a file to be encrypted." --filename=${HOME}/)
-	case $? in
-		0)
-			echo "\"$TARGET\" selected.";;
-		1)
-			echo "No file selected.";;
-		-1)
-			echo "An unexpected error has occurred when setting the target.";;
-	esac
-	OUTPUT=$(basename ${TARGET}).gpg
-	TARGET_DIR=$(dirname ${TARGET})
-}
-
-function set_output_directory {
-	OUTPUT_DIR=$(zenity --file-selection --title="Select a directory for the encrypted file." --filename=${TARGET_DIR}/ --directory)
-	case $? in
-		0)
-			echo "\"$OUTPUT_DIR\" selected.";;
-		1)
-			echo "No file selected.";;
-		-1)
-			echo "An unexpected error has occurred when setting the output.";;
-	esac
-}
-
 function create_encrypted_file {
 	gpg --armor --output ${OUTPUT_DIR}/${OUTPUT} --symmetric ${TARGET}
 }
@@ -47,7 +21,10 @@ function create_qrcode {
 
 function run {
 	echo "running..."
-	set_target
+	#set_target
+	TARGET=$1
+	OUTPUT=$(basename ${TARGET}).gpg
+	OUTPUT_DIR=$(dirname ${TARGET})
 	set_output_directory
 	create_encrypted_file
 	create_qrcode
@@ -62,11 +39,6 @@ function run {
 cat << EOF
 ---
 This script helps you to symmetrically encrypt a file.
-
-You will be prompted to select a target plaintext file, along with a directory
-to store the encrypted data.
-
-Output includes a gpg encrypted document and a QR code representation of the document.
 
 Note that the QR encoding is not optimised for large files.
 ---
