@@ -20,6 +20,7 @@ function create_qrcode {
 }
 
 function run {
+	[[ $# -eq 0 ]] && { echo "Please supply a target file: $(basename $0) <path/to/file>"; exit 1; }
 	echo "running..."
 	#set_target
 	TARGET=$1
@@ -44,11 +45,11 @@ Note that the QR encoding is not optimised for large files.
 ---
 EOF
 
-while true; do
-	read -p "Do you want to proceed[y/N]?" -n 1 -r
-	echo $REPLY
-	[[ $REPLY =~ ^[yY]$ ]] && { run; break; }
-	[[ $REPLY =~ ^[nN]$ ]] && exit
-	echo "Please enter y or n."
-done
-
+#while true; do
+#	read -p "Do you want to proceed[y/N]?" -n 1 -r
+#	echo $REPLY
+#	[[ $REPLY =~ ^[yY]$ ]] && { run; break; }
+#	[[ $REPLY =~ ^[nN]$ ]] && exit
+#	echo "Please enter y or n."
+#done
+run
